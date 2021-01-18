@@ -1,20 +1,25 @@
 {% extends "base.html" %}
+{% load hitcount_tags %}
 {% block page_content %}
+
 <div class="col-md-8 offset-md-2">
     <h1>M.J. blog</h1>
     <hr>
     {% for post in posts %}
-    <h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
-    <small>
-        {{ post.created_on.date }} |&nbsp;
-        Categories:&nbsp;
-        {% for category in post.categories.all %}
-        <a href="{% url 'blog_category' category.name %}">
-            {{ category.name }}
-        </a>&nbsp;
-        {% endfor %}
-    </small>
-    <p>{{ post.body | slice:":160" }}...</p>
+		<div class='ui segment'>
+			<h2><a href="{% url 'blog_detail' post.pk%}">{{ post.title }}</a></h2>
+			<small>
+				{{ post.created_on.date }} |&nbsp;
+				Categories:&nbsp;
+				{% for category in post.categories.all %}
+				<a href="{% url 'blog_category' category.name %}">
+					{{ category.name }}
+				</a>&nbsp;
+				{% endfor %}<br>
+				<strong>{{ post.liked }} likes</strong>
+			</small>
+			<p>{{ post.body | slice:":160" }}...</p>
+		</div>
     {% endfor %}
 </div>
 {% endblock %}

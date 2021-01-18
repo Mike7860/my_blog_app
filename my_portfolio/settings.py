@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'my_blog'
+    'my_blog',
+    'hitcount'
 ]
 
 MIDDLEWARE = [
@@ -64,8 +65,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            },
         },
-    },
+
 ]
 
 WSGI_APPLICATION = 'my_portfolio.wsgi.application'
@@ -119,3 +122,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
