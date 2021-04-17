@@ -1,0 +1,1 @@
+web: gunicorn web:my_portfolio.wsgi
