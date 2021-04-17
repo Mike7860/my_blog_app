@@ -54,7 +54,7 @@
     <p>{{ comment.body | linebreaks }}</p>
 	{% csrf_token %}
 		<strong>{{ comment.liked}} likes</strong>
-		<form action="{% url 'comment_like' comment.id %}" method="post" class="ui form">
+		<form action="{% url 'comment_like' post.id %}" method="post" class="ui form">
 			{% csrf_token %}
 			<button type="submit" name="blogcomment_id" value="{{object.id}}" class="btn btn-info">Like</button><br>
 		</form>

@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from .forms import CommentForm
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from .forms import CommentForm, LikeForm
 from django.views.generic.list import ListView
 from hitcount.views import HitCountDetailView
+from collections import Counter
+
 
 from django.http import HttpResponseRedirect
 from my_blog.models import Post, Comment
@@ -57,19 +59,35 @@ def blog_detail(request, pk):
     return render(request, "blog_details.html", context)
 
 
-def blog_post_like(request):
-    likes_counter = 0
-    #post_liked = Post.objects.get(pk=blogpost_id)
-    if request.method == 'POST':
-        likes_counter += 1
-        # post_liked.views += 1
-        # post_liked.save()
-        post_id = request.POST.get('blogpost_id')
-        post_obj = Post.objects.get(id=post_id)
-        post_obj.liked.add(str(likes_counter))
+def blog_post_like(request, pk):
+    #likes_counter = 0
+    post = Post.objects.get(pk=pk)
+    like_form = LikeForm()
+    if request.POST.get('blogpost_id'):
+        likes_counter, created = Counter.objects.get_or_create(post.liked)
+        likes_counter.count = likes_counter.count + 1
+        likes_counter.save()
+    return HttpResponse(likes_counter.count)
+   # if "blogpost_id" in request.POST:
+   #      likes_counter = +1
+   #      like_form = LikeForm(request.POST)
+   #      if like_form.is_valid():
+   #          like = Post(
+   #              liked=likes_counter
+   #          )
+   #          like.save()
+
+        #post_obj = Post.objects.get(id=pk)
+        #post_obj.liked.add(str(likes_counter))
+        # post.number_of_likes.liked += 1
+        # post.number_of_likes.liked.save()
         #like, created = Like.objects.get_or_create(user=user, post_id=post_id)
-    context = {"liked": likes_counter}
-    return render(request, "blog_details.html", context)
+    #context = {"liked": likes_counter}
+    # context = {
+    #     "post": post,
+    #     "liked": like,
+    # }
+    #return render(request, "blog_details.html", {'liked': likes_counter})
     #return HttpResponseRedirect(reverse('blogpost-detail', args=[str(pk)]))
     #return render(request, "blog_details.html", context)
 

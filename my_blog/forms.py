@@ -15,3 +15,7 @@ class CommentForm(forms.Form):
             "placeholder": "Leave a comment!"
         })
     )
+
+
+class LikeForm(forms.Form):
+    body = forms.IntegerField(max_value=5)
