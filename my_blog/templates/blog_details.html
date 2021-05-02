@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load hitcount_tags %}
+
 {% block page_content %}
+
 <div class="col-md-8 offset-md-2">
     <h1>{{ post.title }}</h1>
     <small>
@@ -26,7 +28,7 @@
 		</form>
 	<p>Views: {% get_hit_count for post %}</p>
 	{% else %}
-	<strong>{{ post.liked}} likes</strong>
+	<strong>{{ post.hit_count.hits }} likes</strong>
 		<form action="{% url 'post_like' post.id %}" method="post" class="ui form">
 			{% csrf_token %}
 			<button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Like</button>
@@ -53,10 +55,10 @@
     </p>
     <p>{{ comment.body | linebreaks }}</p>
 	{% csrf_token %}
-		<strong>{{ comment.liked}} likes</strong>
+		<strong>{{ comment.liked }} likes</strong>
 		<form action="{% url 'comment_like' post.id %}" method="post" class="ui form">
 			{% csrf_token %}
-			<button type="submit" name="blogcomment_id" value="{{object.id}}" class="btn btn-info">Like</button><br>
+			<button type="submit" name="blogcomment_id" value="{{form.liked}}" class="btn btn-info">Like</button><br>
 		</form>
     <hr>
     {% endfor %}
